@@ -1,8 +1,20 @@
-const express = require('express');
-const app = express();
+const util = require('util');
+const log = message => {
+  console.log(util.inspect(message, { depth: Infinity }));
+};
 
-app.use(express.static('public'));
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const token = process.env.DISCORD_TOKEN;
 
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
 });
+
+client.on('message', msg => {
+  if (msg.content === 'Rubenbot') {
+    msg.reply('Wassuppp');
+  }
+});
+
+client.login(token);
